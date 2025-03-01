@@ -1,0 +1,7 @@
+moderngl
+moderngl-window
+imgui
+imgui[glfw]
+pyrr
+numpy
+pillow

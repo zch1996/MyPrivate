@@ -33,9 +33,9 @@ class Cell:
 
     def __init__(self):
         """Constructor"""
-        self.info(
-            f"Creating Cell at {datetime.now().strftime('%Y-%m-%d %H:%M:%S')} by Python port"
-        )
+        # self.info(
+        #     f"Creating Cell at {datetime.now().strftime('%Y-%m-%d %H:%M:%S')} by Python port"
+        # )
 
         # Core state variables
         self.trsf = np.eye(3, dtype=Real)  # Deformation gradient tensor

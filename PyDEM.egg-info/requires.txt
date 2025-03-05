@@ -1,0 +1,7 @@
+PyOpenGL
+PyOpenGL_accelerate
+PyQt5
+coloredlogs
+ipython
+numpy>=1.19.0
+pygame

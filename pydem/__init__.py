@@ -41,8 +41,9 @@ from pydem.src.ContactLoop import ContactLoop
 from pydem.src.DynDt import DynDt
 from pydem.src.Leapfrog import ForceResetter, Leapfrog
 
-# Import utis
+# Import utils
 from pydem.src import utils
+
 
 # Initialize OpenMP thread count
 try:
@@ -64,20 +65,20 @@ _factory = FunctorFactory.instance()
 # Function to register all functors
 def register_all_functors():
     """Register all available functors."""
-    logger.info("Registering functors...")
+    # logger.info("Registering functors...")
 
-    # 获取 src 目录
+    # Get src directory
     src_dir = os.path.join(os.path.dirname(__file__), "src")
 
-    # 导入所有模块
+    # Import all modules
     for filename in os.listdir(src_dir):
         if filename.endswith(".py") and not filename.startswith("__"):
-            module_name = filename[:-3]  # 移除 .py 扩展名
+            module_name = filename[:-3]  # Remove .py extension
             try:
                 logger.debug(f"Importing module: {module_name}")
                 module = importlib.import_module(f"pydem.src.{module_name}")
 
-                # 查找所有函数子类
+                # Find all functor subclasses
                 for name, obj in inspect.getmembers(module):
                     if (
                         inspect.isclass(obj)
@@ -85,7 +86,7 @@ def register_all_functors():
                         and obj.__module__ == module.__name__
                     ):
                         try:
-                            # 检查是否是函数子类
+                            # Check if it's a functor subclass
                             from pydem.src.Functor import Functor
 
                             if issubclass(obj, Functor) and obj is not Functor:
@@ -96,14 +97,14 @@ def register_all_functors():
             except ImportError as e:
                 logger.debug(f"Could not import module {module_name}: {e}")
 
-    logger.info("Functor registration complete")
+    # logger.info("Functor registration complete")
 
 
 # Register all functors
 register_all_functors()
 
 # Try to print functors registered
-if True:
+if False:
     logger.info("Registered functors:")
     for functor_type, functor_class in _factory.boundFunctors.items():
         logger.info(f"  {functor_type.__name__}: {functor_class.__name__}")

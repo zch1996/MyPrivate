@@ -42,7 +42,7 @@ class FunctorFactory:
         self.contactPhysTypes = set()
         self.lawmodelTypes = set()
 
-        self.info("FunctorFactory initialized")
+        # self.info("FunctorFactory initialized")
 
     def registerBoundFunctor(self, shape_type, functor_class):
         """

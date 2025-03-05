@@ -526,7 +526,7 @@ class Leapfrog2(Engine):
             if self.reset:
                 # Apply gravity only to the clump itself
                 if hasGravity and not dyn.isGravitySkip():
-                    dyn.force = dem.gravity * dyn.mass
+                    dyn.force = dyn.mass * dem.gravity
                 else:
                     dyn.force = Vector3r(0, 0, 0)
 

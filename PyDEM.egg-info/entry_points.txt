@@ -1,0 +1,3 @@
+[console_scripts]
+pydem = pydem.__main__:main
+

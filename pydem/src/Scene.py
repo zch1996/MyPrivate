@@ -150,9 +150,8 @@ class Scene(Object):
         # Timing
         self.startTime = time.time()
 
-        print(
-            f"Creating new Scene at {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
-        )
+        # Create a DEMField object
+        self.fields.append(DEMField())
 
     def __del__(self):
         """Clean up when Scene is deleted."""
@@ -166,7 +165,7 @@ class Scene(Object):
             try:
                 from .DEMLogging import DEM_LOGGER
 
-                self.info(f"Scene {self.toString()} is being deleted")
+                # self.info(f"Scene {self.toString()} is being deleted")
             except (ImportError, AttributeError):
                 pass
 
@@ -184,6 +183,14 @@ class Scene(Object):
         except Exception:
             # Ignore exceptions while cleaning up
             pass
+
+    @property
+    def field(self):
+        return self.fields[0]
+
+    @field.setter
+    def field(self, value):
+        self.fields[0] = value
 
     def integrateCell(self, dt):
         """Integrate cell state."""
@@ -528,13 +535,13 @@ class Scene(Object):
         """Check if energy tracking is enabled."""
         return self.trackEnergy
 
-    def setField(self, field):
+    def setField(self, field, index=0):
         """Set the field for this scene."""
-        self.field = field
+        self.fields[index] = field
 
-    def getField(self):
+    def getField(self, index=0):
         """Get the field for this scene."""
-        return self.field
+        return self.fields[index]
 
     def setCellBox(self, size):
         """Set cell size for periodic simulation."""
@@ -549,7 +556,7 @@ class Scene(Object):
 
     def cleanup(self):
         """Explicitly clean up resources."""
-        self.info(f"Cleaning up Scene {self.toString()}")
+        # self.info(f"Cleaning up Scene {self.toString()}")
 
         # 执行清理操作
         self.engines.clear()

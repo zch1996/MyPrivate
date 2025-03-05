@@ -54,7 +54,7 @@ class Omega(Object):
         # Configuration
         self.confDir = self._getConfigDir()
 
-        self.debug(f"Omega initialized at {self.startupLocalTime}")
+        # self.debug(f"Omega initialized at {self.startupLocalTime}")
 
     def _getTempDir(self) -> str:
         """Get temporary directory path."""
@@ -177,37 +177,21 @@ class Omega(Object):
         """
         sys.exit(status)
 
+    def initVisualization(self, use_ui=True):
+        """
+        Initialize visualization system.
+
+        Args:
+            use_ui: Whether to start the UI (True) or just initialize the renderer (False)
+
+        Returns:
+            The renderer or window instance if successful, None otherwise
+        """
+        from pydem.visualization import initialize_visualization, start_control_ui
+
+        if use_ui:
+            return start_control_ui(self)
+        else:
+            return initialize_visualization(self)
+
     ##############################################
-    def startGL(self):
-        """Start VTK visualization"""
-        if not hasattr(self, "renderer") or self.renderer is None:
-            try:
-                from pydem.visualization.vtk_renderer import VTKRenderer
-
-                self.renderer = VTKRenderer(self)
-
-                # Start in a separate thread to not block simulation
-                import threading
-
-                self.render_thread = threading.Thread(target=self.renderer.start)
-                self.render_thread.daemon = True
-                self.render_thread.start()
-                return self.renderer
-            except Exception as e:
-                import traceback
-
-                print(f"Error starting visualization: {e}")
-                traceback.print_exc()
-                return None
-        return self.renderer
-
-    def stopGL(self):
-        """Stop VTK visualization"""
-        if hasattr(self, "renderer") and self.renderer is not None:
-            try:
-                self.renderer.stop()
-                if hasattr(self, "render_thread") and self.render_thread.is_alive():
-                    self.render_thread.join(timeout=1.0)
-                self.renderer = None
-            except Exception as e:
-                print(f"Error stopping visualization: {e}")

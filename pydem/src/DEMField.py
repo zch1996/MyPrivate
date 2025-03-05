@@ -6,7 +6,7 @@ import numpy as np
 from typing import Dict, List, Optional, Set, Tuple, Any
 
 from pydem.src.Field import Field
-from pydem.src.demmath import Vector3r, Real, NAN
+from pydem.src.demmath import Vector3r, Real, NAN, AlignedBox3r
 from pydem.src.ParticleContainer import ParticleContainer
 from pydem.src.ContactContainer import ContactContainer
 from pydem.src.DEMData import DEMData
